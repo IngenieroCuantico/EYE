@@ -11,17 +11,19 @@ public class Conexion {
 	
 	
 	private Statement statement;
-	private Connection connection;
+	private Connection conexion;
 	private String jdbc;
 	private String ruta;
 	private String usuario;
 	private String contra;
+
+	
 	
 	public Conexion() {
 		
-		this.connection = null;
+		this.conexion = null;
 		this.statement = null;
-		this.jdbc = "com.mysql.jdbc.Driver";
+		this.jdbc = "com.mysql.cj.jdbc.Driver";
 		this.ruta = "jdbc:mysql://localhost:3306/BD_EYE";
 		this.usuario = "root";
 		this.contra = "";
@@ -36,9 +38,19 @@ public class Conexion {
 			
 			Class.forName(this.jdbc);
 			
-			this.connection = DriverManager.getConnection(this.ruta,this.usuario,this.contra);
+			this.conexion = DriverManager.getConnection(this.ruta,this.usuario,this.contra);
 			
-			this.statement = this.connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			//this.statement = this.connection.createStatement();
+			
+			this.statement = this.conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.TYPE_SCROLL_SENSITIVE);
+					//ResultSet.TYPE_SCROLL_INSENSITIVE,
+					
+					/*ResultSet.CONCUR_READ_ONLY,
+					ResultSet.TYPE_FORWARD_ONLY,
+					ResultSet.TYPE_SCROLL_SENSITIVE*/
+						
+			 		
+				
 			
 			System.out.println("SISTEMA EYE , 100%");
 			
@@ -79,7 +91,10 @@ public class Conexion {
 	}
 	
 	
+	
+	
 	public ResultSet consultar(String sentencia) {
+		
 		
 		ResultSet resultado = null;
 		
@@ -87,7 +102,8 @@ public class Conexion {
 			
 			this.abrirConexion();
 			
-			resultado=statement.executeQuery(sentencia);
+			
+			resultado = this.statement.executeQuery(sentencia);
 			
 			
 		}catch(SQLException e) {
@@ -98,3 +114,18 @@ public class Conexion {
 		return resultado;
 	}
 }
+
+
+
+
+/*System.out.println("Consultar Efectuado "  );
+
+System.out.println("Sentencia"  );
+
+System.out.println(sentencia );
+
+System.out.println("resultado"  );
+
+System.out.println(resultado );
+
+*/

@@ -146,17 +146,21 @@ public class FIConsultarProducto extends JInternalFrame {
 		
 		//JOptionPane.showMessageFialog(this,producto.agregar(buttonActualizarActionPerformed(evt);
 		
-		Producto productoconsultar = new Producto(Integer.parseInt(this.textId.getText()));
+		Producto Objproducto = new Producto(Integer.parseInt(this.textId.getText()));
 		
 		
-		if(productoconsultar.consultar()) {
+		if(Objproducto.consultar()) {
 			
-			this.textNombre.setText(productoconsultar.getNombre());
-			this.textCantidad.setText(String.valueOf(productoconsultar.getCantidad()));
-			this.textPrecio.setText(String.valueOf(productoconsultar.getPrecio()));
+			this.textNombre.setText(Objproducto.getNombre());
+			
+			this.textCantidad.setText(String.valueOf(Objproducto.getCantidad()));
+			
+			this.textPrecio.setText(String.valueOf(Objproducto.getPrecio()));
 			
 		}else {
+			
 			//Mensaje al no en contrar resultados
+			
 			JOptionPane.showMessageDialog(this, "No Existen Resultados","Consultar",JOptionPane.INFORMATION_MESSAGE);
 		}
 		

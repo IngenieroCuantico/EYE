@@ -19,11 +19,13 @@ public class Producto {
 	
 	
 	
+	//Metodo Constructor Sobrecargado Vacio De Producto
 	public Producto() {
 		
 		
 	}
 	
+	//metodo sobrecargado de Producto pasando por parametros 
 	public Producto(int id, String nombre, int cantidad, long precio) {
 		
 		this.id = id;
@@ -42,10 +44,10 @@ public class Producto {
 		
 		this.filtro = filtro;
 	}
-	
-	public String  getFiltro() {
+	/*
+	public String[][]  getFiltro(String filtro) {
 		return this.filtro;
-	}
+	}*/
 	/*public void setId() {
 		
 		this.id=id;
@@ -179,25 +181,42 @@ public class Producto {
 	}
 	
 	
+	
+	
+	
 	//Metodo BUSCAR
 	
 	public String[][] buscar(String filtro){
 		
+		
+		//Objeto de la conexion a la base de datos
+		
 		Conexion conexionBD = new Conexion();
 		
+		//Objeto del mapeo productoDAO
+		
 		ProductoDAO productoDAO = new ProductoDAO();
+				
+		//Objeto ResultSet.
 		
-		ResultSet resultado = conexionBD.consultar(productoDAO.buscar(filtro));
-		
+		ResultSet resultado =  conexionBD.consultar(productoDAO.buscar(filtro)); 
+				
 		System.out.println(filtro);
+		System.out.println(resultado);
+		
+		
 		String[][] datos = null;
 				
 		try {
-				
+			resultado.isLast();
+			
+			
+			System.out.println(resultado);
+			
 			
 			datos = new String[resultado.getRow()][4];
 						
-			resultado.beforeFirst();
+			
 			
 			int i=0;
 			
@@ -207,16 +226,29 @@ public class Producto {
 				datos[i][1] = resultado.getString("nombre");
 				datos[i][2] = resultado.getString("cantidad");
 				datos[i][3] = resultado.getString("precio");
-				i++;
-			}
 			
+				i++;
+							
+			}
+		
+			resultado.beforeFirst();
+			System.out.println(resultado);
 		}catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
+		
 		return datos;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//ELIMINAR
 	public String eliminar() {
