@@ -16,9 +16,10 @@ public class Conexion {
 	private String ruta;
 	private String usuario;
 	private String contra;
+	private ResultSet resultado;
 
 	
-	
+	//Metodo Constructor Producto
 	public Conexion() {
 		
 		this.conexion = null;
@@ -27,10 +28,11 @@ public class Conexion {
 		this.ruta = "jdbc:mysql://localhost:3306/BD_EYE";
 		this.usuario = "root";
 		this.contra = "";
+		this.resultado = null;
 	}
 	
 	
-	private void abrirConexion() {
+	public void abrirConexion() {
 		
 		try {
 			
@@ -42,14 +44,21 @@ public class Conexion {
 			
 			//this.statement = this.connection.createStatement();
 			
-			this.statement = this.conexion.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.TYPE_SCROLL_SENSITIVE);
-					//ResultSet.TYPE_SCROLL_INSENSITIVE,
+			/*this.statement = this.conexion.createStatement(					
+					resultado.TYPE_SCROLL_INSENSITIVE, resultado.CONCUR_UPDATABLE
+					);
+			*/
+			
+			this.statement = this.conexion.createStatement(resultado.TYPE_SCROLL_INSENSITIVE, resultado.CONCUR_UPDATABLE);
+			
+			
+//			ResultSet.CONCUR_UPDATABLE
 					
-					/*ResultSet.CONCUR_READ_ONLY,
-					ResultSet.TYPE_FORWARD_ONLY,
-					ResultSet.TYPE_SCROLL_SENSITIVE*/
-						
-			 		
+								  
+					
+			
+			
+				
 				
 			
 			System.out.println("SISTEMA EYE , 100%");
@@ -68,8 +77,13 @@ public class Conexion {
 			//Error Clase no encontrada
 			
 			e.printStackTrace();
+			
 		}
 	}
+	
+	
+	
+	
 	
 	//Ejecuta la sentencia final para la base de datos despues de estar conectada
 	
@@ -81,7 +95,7 @@ public class Conexion {
 			
 			this.statement.executeUpdate(sentencia);
 			
-			return "Operacion Exitosa. Producto Efectuado Satisfactoriamente";
+			return "Operacion Exitosa. Producto Ejecutado Satisfactoriamente";
 			
 		}catch(SQLException e) {
 			
@@ -94,23 +108,24 @@ public class Conexion {
 	
 	
 	public ResultSet consultar(String sentencia) {
-		
+	
 		
 		ResultSet resultado = null;
 		
 		try {
-			
+						
 			this.abrirConexion();
-			
 			
 			resultado = this.statement.executeQuery(sentencia);
 			
+			System.out.println("Consulta Efectuada "+this.statement+ "Resultado ="+resultado);		
 			
 		}catch(SQLException e) {
 			
 			e.printStackTrace();
 			
 		}
+		
 		return resultado;
 	}
 }
@@ -118,7 +133,7 @@ public class Conexion {
 
 
 
-/*System.out.println("Consultar Efectuado "  );
+/*
 
 System.out.println("Sentencia"  );
 

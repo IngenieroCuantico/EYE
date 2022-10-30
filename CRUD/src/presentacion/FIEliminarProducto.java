@@ -29,7 +29,7 @@ public class FIEliminarProducto extends JInternalFrame {
 	private JButton buttonLimpiar;
 	private JButton buttonConsultar;
 	private JButton buttonEliminar;
-	private JButton buttonRegresarInicio;
+
 	
 	public FIEliminarProducto() {
 		
@@ -118,23 +118,12 @@ public class FIEliminarProducto extends JInternalFrame {
 			
 		}
 		
-		{
-			buttonRegresarInicio = new JButton();
-			getContentPane().add(buttonRegresarInicio);
-			buttonRegresarInicio.setText("Regresar");
-			buttonRegresarInicio.addActionListener( new ActionListener() {
-				
-				public void actionPerformed(ActionEvent evt) {
-					buttonRegresarInicioActionPerformed(evt);
-				}
-			});
-			
-			
-		}
+		
 		{
 			buttonConsultar = new JButton();
 			getContentPane().add(buttonConsultar);
 			buttonConsultar.setText("Consultar");
+			
 			buttonConsultar.addActionListener(new ActionListener() {
 				
 				public void actionPerformed(ActionEvent evt) {
@@ -147,19 +136,7 @@ public class FIEliminarProducto extends JInternalFrame {
 	
 	}
 	
-	
-	
-
-	
-	private void buttonRegresarInicioActionPerformed(ActionEvent evt) {
 		
-		textId.setText("");
-		textNombre.setText("");
-		textCantidad.setText("");
-		textPrecio.setText("");
-		
-	}
-	
 	private void buttonLimpiarActionPerformed (ActionEvent evt) {
 		textId.setText("");
 		textNombre.setText("");

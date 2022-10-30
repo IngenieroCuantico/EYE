@@ -95,6 +95,7 @@ public class FIAgregarProducto extends JInternalFrame {
 			getContentPane().add(textPrecio);
 		}
 		{
+			
 			buttonAgregar = new JButton();
 			
 			getContentPane().add(buttonAgregar);
@@ -138,17 +139,22 @@ public class FIAgregarProducto extends JInternalFrame {
 		
 		Producto producto = new Producto(Integer.parseInt(this.textId.getText()),this.textNombre.getText(),Integer.parseInt(this.textCantidad.getText()),Long.parseLong(this.textPrecio.getText()));
 		
-		JOptionPane.showMessageDialog(this, producto.insertar(),"Agregar",JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, producto.insertar(), "Agregar", JOptionPane.INFORMATION_MESSAGE);
+		
 		System.out.println("Estoy funcionando al ingresar");
 		
-//		buttonLimpiarActionPerformed(evt);
+        buttonLimpiarActionPerformed(evt);
 	}
+	
 	
 	private void buttonLimpiarActionPerformed (ActionEvent evt) {
 
 		textId.setText("");
+		
 		textNombre.setText("");
+		
 		textCantidad.setText("");
+		
 		textPrecio.setText("");
 		
 	}

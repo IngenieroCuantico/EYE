@@ -2,24 +2,28 @@ package logica;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import java.sql.DatabaseMetaData;
+
+import javax.swing.JOptionPane;
 
 import persistencia.Conexion;
 import persistencia.ProductoDAO;
 
 
 
+//Metodo Principal De Producto
 
 public class Producto {
+
 	
 	private int id;
 	private String nombre;
 	private int cantidad;
 	private long precio;
-	private String filtro;
+		
 	
-	
-	
-	//Metodo Constructor Sobrecargado Vacio De Producto
 	public Producto() {
 		
 		
@@ -38,29 +42,17 @@ public class Producto {
 	public Producto(int id) {
 		
 		this.id = id;
-	}
-		
-	public Producto(String filtro) {
-		
-		this.filtro = filtro;
-	}
-	/*
-	public String[][]  getFiltro(String filtro) {
-		return this.filtro;
-	}*/
-	/*public void setId() {
-		
-		this.id=id;
+	
 	}
 	
-	public int getId() {
+	
+	public Producto(String nombre) {
 		
-		return this.id;
+		this.nombre = nombre;
 	}
-	*/
-	public void setNombre(String nombre) {
-		
-		 this.nombre = nombre;
+	
+	public int getID() {
+		return this.id;
 	}
 	
 	public String getNombre() {
@@ -68,91 +60,53 @@ public class Producto {
 		return this.nombre;
 	}
 	
-	public void setCantidad(int cantidad) {
-		
-		 this.cantidad=cantidad;
-	}
-	
 	
 	public int getCantidad() {
 		
 		return this.cantidad;
 	}
-	
-	
-	public void setPrecio(long precio) {
 		
-		 this.precio = precio;
-	}
-	
 	public long getPrecio() {
 		
 		return this.precio;
 	}
 	
-	/*
-	
-	public void setPrecio(long precio) {
-		
-		this.precio = precio;
-	}
-	public long getPrecio() {
-		
-		return this.precio;
-	}
-	
-	
-	
-	public  void  setCantidad(int cantidad) {
-		
-		 this.cantidad = cantidad;
-	}
-	
-	
-	*/
-	
-	
+
+	//_::::::::::::::::::::::::::::::::::::::::::::::::::
 	//INGRESAR
 	
 	public String insertar() {
 		
-		/*
-		 * int id, String nombre, int cantidad, Long precio
-		 */
-	
-		//Creacion de Obj. conexion.
-		
 		Conexion conexion = new Conexion();
+		ProductoDAO productoDAO = new ProductoDAO(this.id, this.nombre, this.cantidad, this.precio);
 		
-		//Creacion del Obj. para mapear el DAO.
-		ProductoDAO productomapeoDAO = new ProductoDAO(this.id, this.nombre, this.cantidad, this.precio);
-		
-		
-		//Retorna Un Caracter de Cadena despues de instancias el productomapeDAO.insertar().
-		return conexion.ejecutar(productomapeoDAO.insertar());
+		return conexion.ejecutar(productoDAO.insertar());
+			
 	}
 	
 	
-	
+	//_::::::::::::::::::::::::::::::::::::::::::::::::::
 	//CONSULTAR
 	public boolean consultar() {
 
 		Conexion conexion = new Conexion();
-		
 		ProductoDAO productoDAO = new ProductoDAO(this.id);
-		
 		ResultSet resultado = conexion.consultar(productoDAO.consultar());
 	
 		try {
+			
+			System.out.println(resultado);
 					
 						if(resultado.next()) {
 				//Trae Los Resultados del base de datos con esa consulta de validacion con el IF...
 							this.nombre = resultado.getString("nombre");
 							this.cantidad = resultado.getInt("Cantidad");
 							this.precio = resultado.getLong("precio");
-							
-							//Retorna Verdadero
-						return true;
+			
+							//Retorna Verdadero Respuesta Despues
+							//De Consultar Bien
+	
+							return true;
 							
 						}else {
 							//Retorna Falso
@@ -171,68 +125,57 @@ public class Producto {
 		
 	}
 
+	
+	//_::::::::::::::::::::::::::::::::::::::::::::::::::
+	//ACTUALIZAR
 	public String actualizar() {
 		
 		Conexion conexion = new Conexion();
-		
+	
 		ProductoDAO productoDAO = new ProductoDAO(this.id,this.nombre,this.cantidad,this.precio);
 		
 		return conexion.ejecutar(productoDAO.actualizar());
+		
 	}
 	
-	
-	
-	
-	
-	//Metodo BUSCAR
+	//_::::::::::::::::::::::::::::::::::::::::::::::::::
+	//BUSCAR
 	
 	public String[][] buscar(String filtro){
 		
-		
-		//Objeto de la conexion a la base de datos
-		
-		Conexion conexionBD = new Conexion();
-		
-		//Objeto del mapeo productoDAO
-		
-		ProductoDAO productoDAO = new ProductoDAO();
-				
-		//Objeto ResultSet.
-		
-		ResultSet resultado =  conexionBD.consultar(productoDAO.buscar(filtro)); 
-				
-		System.out.println(filtro);
-		System.out.println(resultado);
-		
-		
-		String[][] datos = null;
-				
-		try {
-			resultado.isLast();
 			
+		Conexion conexion = new Conexion();
+			
+		ProductoDAO productoDAO = new ProductoDAO();
+		//System.out.println(productoDAO);
+	
+		ResultSet resultado =  conexion.consultar(productoDAO.buscar(filtro));
+			
+		String[][] datos = null;
+		
+		//System.out.println(resultado);
+		try {
 			
 			System.out.println(resultado);
 			
-			
+			resultado.last();
+					
 			datos = new String[resultado.getRow()][4];
-						
-			
 			
 			int i=0;
 			
 			while(resultado.next()) {
-				
 				datos[i][0] = resultado.getString("id");
 				datos[i][1] = resultado.getString("nombre");
 				datos[i][2] = resultado.getString("cantidad");
 				datos[i][3] = resultado.getString("precio");
+				
+					i++;		
+			}	
 			
-				i++;
-							
-			}
-		
 			resultado.beforeFirst();
-			System.out.println(resultado);
+			
+
 		}catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -242,14 +185,7 @@ public class Producto {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	//_::::::::::::::::::::::::::::::::::::::::::::::::::
 	//ELIMINAR
 	public String eliminar() {
 		
@@ -261,3 +197,45 @@ public class Producto {
 	}
 	
 }
+
+
+
+/*	public void setCantidad(int cantidad) {
+
+this.cantidad=cantidad;
+}
+*/
+
+
+
+/*
+ * int id, String nombre, int cantidad, Long precio
+ */
+
+//Creacion de Obj. conexion.
+
+
+
+//Creacion del Obj. para mapear el DAO.
+
+//Retorna Un Caracter de Cadena despues de instancias el productomapeDAO.insertar().
+
+
+
+/*		System.out.println("__Este es el id consultado__por consola");
+		System.out.println(this.id);
+		System.out.println("_______");
+		
+		System.out.println("__Este es el nombre consultado__por consola");
+		System.out.println(this.nombre);
+		System.out.println("_______");
+
+		System.out.println("__Este es la cantidad__por consola");
+		System.out.println(this.cantidad);
+		System.out.println("_______");
+
+		System.out.println("__Este es el precio consultado__por consola");
+		System.out.println(this.precio);
+		System.out.println("_______");
+		
+		*/

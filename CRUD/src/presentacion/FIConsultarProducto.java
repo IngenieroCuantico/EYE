@@ -79,31 +79,22 @@ public class FIConsultarProducto extends JInternalFrame {
 		{
 			textCantidad = new JTextField();
 			getContentPane().add(textCantidad);
-			
 		}
-		
-		
 		{
 			labelPrecio = new JLabel();
 			getContentPane().add(labelPrecio);
 			labelPrecio.setText("Precio");
-			
-			
 		}
 		{
 			textPrecio = new JTextField();
 			getContentPane().add(textPrecio);
-			
 		}
-		
 		{
-			
 			buttonConsultar = new JButton();
 			//Adiciona al contenido del pane el boton
 			getContentPane().add(buttonConsultar);
 			//Coloca el nombre
 			buttonConsultar.setText("Consultar");
-			
 			//Metodo del evento del boton consultar
 			buttonConsultar.addActionListener(new ActionListener() {
 				
@@ -145,10 +136,12 @@ public class FIConsultarProducto extends JInternalFrame {
 		//Producto producto = new Producto(Integer.parseInt(this.textId.getText(), this.textNombre.getText(),Integer.parseInt(this.textCantidad.getText()),Long.parseLong(this.textPrecio.getText()));
 		
 		//JOptionPane.showMessageFialog(this,producto.agregar(buttonActualizarActionPerformed(evt);
-		
+		//Creacion del objeto
 		Producto Objproducto = new Producto(Integer.parseInt(this.textId.getText()));
 		
+		JOptionPane.showMessageDialog(this, Objproducto,"Consultando Producto ......",JOptionPane.INFORMATION_MESSAGE);
 		
+		//Objeto Con Su Metodo .consultar.
 		if(Objproducto.consultar()) {
 			
 			this.textNombre.setText(Objproducto.getNombre());
@@ -174,13 +167,12 @@ public class FIConsultarProducto extends JInternalFrame {
 		JOptionPane.showMessageDialog(this,producto.actualizar(),"Actualizar", JOptionPane.INFORMATION_MESSAGE);
 		
 		
-		textId.setText("");
-		textNombre.setText("");
-		textCantidad.setText("");
-		textPrecio.setText("");
-		
+			textId.setText("");
+			textNombre.setText("");
+			textCantidad.setText("");
+			textPrecio.setText("");
+			
 	}
 	
 	}
-	
 	

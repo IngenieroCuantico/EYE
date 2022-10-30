@@ -1,19 +1,29 @@
+
+
+
 package persistencia;
 
 
 
 public class ProductoDAO {
 
+	//Variables Declaradas
 	private int id;
 	private String nombre;
 	private int cantidad;
 	private long precio;
-	private String filtro;
+
 	
 	
 	public ProductoDAO() {
 		
 	}
+
+
+	public ProductoDAO(int id) {
+			this.id = id;
+	}
+
 	
 	public ProductoDAO(int id, String nombre, int cantidad, long precio) {
 		
@@ -21,26 +31,26 @@ public class ProductoDAO {
 		this.nombre = nombre;
 		this.cantidad = cantidad;
 		this.precio = precio;
-		
+	
 	}
 	
-	public ProductoDAO(int id) {
-		
-	this.id = id;
-		
-	}
+
 	
 	public ProductoDAO(String nombre) {
-		this.filtro = nombre;
+		this.nombre = nombre;
+	}
+	
+
+	
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	public String getNombre() {
 		return this.nombre;
 	}
 	
-	public int getId() {
-		return this.id;
-	}
 	
 	public int getCantidad() {
 		return this.cantidad;
@@ -54,6 +64,7 @@ public class ProductoDAO {
 	
 	
 	//Metodo insertar en el mapeo con la consulta a la BD
+	
 	public String insertar() {
 		return "insert into Producto (id, nombre, cantidad, precio)values('"+this.id+"','"+this.nombre+"','"+this.cantidad+"','"+this.precio+"')";
 	}
@@ -78,8 +89,10 @@ public class ProductoDAO {
 	
 	
 	//Metodo buscar en el mapeo con la consulta a la BD, se le pasa por parametro el filtro obtenido en el JTextField del JPANEL BUSCAR()....
+	//String filtro
 	public String buscar(String filtro) {
-		return "select * from Producto where nombre like'"+filtro+"%'";
+		
+		return "select * from Producto where nombre like '"+filtro+"%'";
 	}	
 	
 	
